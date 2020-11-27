@@ -2,14 +2,14 @@ import sys
 
 from PyQt5.QtGui import QPainter, QColor
 from PyQt5.QtWidgets import QMainWindow, QApplication
-from PyQt5 import uic
+from UI import Ui_MainWindow
 from random import randint
 
 
-class Example(QMainWindow):
+class Example(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi('UI.ui', self)
+        self.setupUi(self)
         self.do_paint = False
         self.setWindowTitle('Рисование')
         self.btn.clicked.connect(self.paint)
@@ -26,7 +26,8 @@ class Example(QMainWindow):
         self.repaint()
 
     def draw_flag(self, qp):
-        qp.setBrush(QColor(255, 255, 0))
+        colors = [(0, 0, 0), (255, 0, 0), (0, 255, 0), (255, 255, 0), (0, 0, 255)]
+        qp.setBrush(QColor(*colors[randint(0, 4)]))
         qp.drawEllipse(randint(0, self.x()), randint(0, self.x()), randint(0, self.y()), randint(0, self.y()))
 
 
